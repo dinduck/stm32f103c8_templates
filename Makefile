@@ -213,7 +213,7 @@ clean:
 
 -include $(wildcard $(BUILD_DIR)/*.d)
 # 用于烧录
-# 烧写
+# 烧写 
 # 调试
 # 擦写
 TYPE_BURN  := openocd_swd_flash
@@ -223,10 +223,9 @@ burn: $(TYPE_BURN)
 debug: $(TYPE_DEBUG)
 erase: $(TYPE_ERASE)
 
-
-$(TYPE_BURN): $(BUILD_DIR)/$(TARGET).elf
-	openocd -f interface/cmsis-dap.cfg -f target/stm32f1x.cfg -c "program $< verify reset exit"
-
+# ELF 文件存在调试信息，BIN 文件没有
+$(TYPE_BURN): $(BUILD_DIR)/$(TARGET).bin
+	openocd -f interface/cmsis-dap.cfg -c "transport select swd" -f target/stm32f1x.cfg -c "init" -c "reset halt" -c "sleep 100" -c "wait_halt 2" -c "flash write_image erase $< 0x08000000" -c "sleep 100" -c "verify_image $< 0x08000000" -c "sleep 100" -c "reset run" -c shutdown
 
 $(TYPE_DEBUG): $(BUILD_DIR)/$(TARGET).elf
 	@kitty -e openocd -f interface/cmsis-dap.cfg -c "transport select swd" -f target/stm32f1x.cfg -c "init" -c "halt" -c "reset halt" &
