@@ -13,6 +13,6 @@
 
 
 **使用说明**
-- [简单使用](./doc/)
+- [简单使用](./doc/usage.md)
 - [环境配置](./doc/setup.md)
-- [VScode](./)
+- [VScode](./doc/VSCode.md)
