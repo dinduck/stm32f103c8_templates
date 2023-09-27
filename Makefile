@@ -219,9 +219,17 @@ clean:
 TYPE_BURN  := openocd_swd_flash
 TYPE_DEBUG := openocd_swd_debug
 TYPE_ERASE := openocd_swd_erase
+TYPE_INIT  := cmake_init
 burn: $(TYPE_BURN)
 debug: $(TYPE_DEBUG)
 erase: $(TYPE_ERASE)
+
+
+
+cbuild: $(TYPE_INIT)
+	@cmake --build ./build \
+		--config Debug \
+		--target all --
 
 # ELF 文件存在调试信息，BIN 文件没有
 $(TYPE_BURN): $(BUILD_DIR)/$(TARGET).bin
@@ -233,3 +241,8 @@ $(TYPE_DEBUG): $(BUILD_DIR)/$(TARGET).elf
 
 $(TYPE_ERASE):
 	openocd -f interface/cmsis-dap.cfg -c "transport select swd" -f target/stm32f1x.cfg  -c "init" -c "reset halt" -c "sleep 100" -c "stm32f1x mass_erase 0" -c "sleep 100" -c shutdown
+
+
+$(TYPE_INIT):
+	cmake -B build -GNinja -DCMAKE_TOOLCHAIN_FILE:FILEPATH=cmake/toolchain.cmake
+
