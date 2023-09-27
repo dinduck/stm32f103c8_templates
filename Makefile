@@ -157,7 +157,7 @@ CFLAGS += -MMD -MP -MF"$(@:%.o=%.d)"
 # -lc 表示链接 libc 也就是标准库
 # -lm 表示链接 libm 也就是数字库
 # -lnosys 表示链接 libnosys ， 根据不同系统不一致， 这里可以理解没有 syscall 功能
-LIBS = -lc -lm -lnosys 
+LIBS =  -lnosys 
 # 库目录
 # -Ldir 指定 表示 在 dir 下寻找相关的库
 LIBDIR = 

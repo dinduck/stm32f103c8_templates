@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(HELLO C ASM)
+project(workspace C ASM)
 
 
 # 启用命令输出，Vim/NeoVim 安装 LSP 时， LSP 可以正常工作:w
@@ -12,7 +12,7 @@ file(GLOB_RECURSE C_SOURCES
     Libraries/CMSIS/CM3/CoreSupport/*.c
     User/*.c
     Libraries/STM32F10x_StdPeriph_Driver/src/*.c
-    EVAL/*.c
+    Hardware/*.c
     System/*.c
 )
 
@@ -30,7 +30,7 @@ include_directories(
     User
     Libraries/CMSIS/CM3/CoreSupport
     Libraries/STM32F10x_StdPeriph_Driver/inc
-    EVAL
+    Hardware
     System
 )
 
@@ -43,6 +43,12 @@ target_link_directories(
   ${PROJECT_NAME} PRIVATE
 )
 
+target_link_libraries(
+  ${PROJECT_NAME} PRIVATE
+  # c
+  # m
+  # nosys
+)
 
 target_compile_definitions(
   ${PROJECT_NAME} PRIVATE
