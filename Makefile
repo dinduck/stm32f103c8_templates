@@ -244,5 +244,5 @@ $(TYPE_ERASE):
 
 
 $(TYPE_INIT):
-	cmake -B build -GNinja -DCMAKE_TOOLCHAIN_FILE:FILEPATH=cmake/toolchain.cmake
+	cmake -B build -GNinja -DCMAKE_TOOLCHAIN_FILE:FILEPATH=cmake/toolchain.cmake -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE  
 
